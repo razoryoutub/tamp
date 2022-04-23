@@ -13,7 +13,7 @@ def add_user():
 	z['date'] = str(input('Введите Дату рождения: '))
 	z['adres'] = str(input('Введите Адрес: '))
 	z['gender'] = str(input('Введите Пол: '))
-	all_records += z  # добавление к глобальному списку локальный элемент
+	all_records.append(z)  # добавление к глобальному списку локальный элемент
 
 
 def del_user():
@@ -35,11 +35,61 @@ def del_user():
 
 
 def print_user():
-	print(3)
+	global c, all_records  # объявление глобальных переменных
+	print("""
+1 - для вывода одной записи
+2 - для вывода всех записей
+			""")  # вывод выбора
+	i = int(input('Выберите пункт меню: '))  # ввод пользователя
+	match i:
+		case 1:
+			i = int(input('Выберите номер записи: '))
+			user = all_records[i]
+			print("""
+Имя: {0}
+фамилия: {1}
+Отчество: {2}
+Дата рождения: {3}
+Адрес: {4}
+Пол: {5}
+""".format(user['fname'], user['sname'], user['patronymic'], user['date'], user['adres'], user['gender']))
+		case 2:
+			c_l = 0
+			for user in all_records:
+				c_l += 1
+				print('Запись номер: {0}'.format(c_l))
+				print("""
+Имя: {0}
+фамилия: {1}
+Отчество: {2}
+Дата рождения: {3}
+Адрес: {4}
+Пол: {5}
+""".format(user['fname'], user['sname'], user['patronymic'], user['date'], user['adres'], user['gender']))
 
 
 def search_user():
-	print(4)
+	global c, all_records  # объявление глобальных переменных
+	print("""
+1 - для поиска по полу
+2 - для поиска по году рождения
+			""")  # вывод выбора
+	i = int(input('Выберите пункт меню: '))  # ввод пользователя
+	match i:
+		case 1:
+			g = str(input('Введите гендер для поиска: '))
+			c_l = 0
+			for user in all_records:
+				c_l += 1
+				if user['gender'] == g:
+					print(f'Запись номер {c_l}')
+		case 2:
+			g = str(input('Введите год для поиска: '))
+			c_l = 0
+			for user in all_records:
+				c_l += 1
+				if g in user['date']:
+					print(f'Запись номер {c_l}')
 
 
 if __name__ == '__main__':
